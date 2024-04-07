@@ -14,7 +14,6 @@ const AppDataSource = new DataSource({
 	database: process.env.DB_NAME,
 	entities: [path.join(__dirname, 'entity/*')],
 	migrations: [path.join(__dirname, 'migrations/*')],
-	// charset: 'UTF8MB4_GENERAL_CI',
 	logging: false,
 	synchronize: false
 });

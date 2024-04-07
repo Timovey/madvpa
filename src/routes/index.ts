@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import allRoutes from '../controllers';
-import expressValidationHandler from '../helpers/expressValidationHandler';
 import { InitRoutesTypes } from '../common/types';
 
 const initRoutes: InitRoutesTypes = function () {
@@ -12,7 +11,6 @@ const initRoutes: InitRoutesTypes = function () {
 		controller.methods.forEach((method) => {
 			router[method.method](
 				'/api' + controller.basePath + method.path,
-				expressValidationHandler,
 				(request: Request, response: Response, next: NextFunction) =>
 					method
 						.action(request, response, next)

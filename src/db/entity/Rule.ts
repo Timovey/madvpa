@@ -3,14 +3,13 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne } from 'typ
 import { Expose, Type } from 'class-transformer';
 import { BaseEntity } from './BaseEntity';
 
-enum GenderTypeEnum {
+export enum GenderTypeEnum {
 	Unknown,
 	Man,
-	Wooman,
-	No
+	Wooman
 }
 
-enum SeasonTypeEnum {
+export enum SeasonTypeEnum {
 	Unknown,
 	Cold,
 	Warm
@@ -61,6 +60,7 @@ export class Rule extends BaseEntity {
 	@Expose()
 	@Column({
 		type: 'enum',
+		enum: GenderTypeEnum,
 		default: GenderTypeEnum.Unknown
 	})
 	gender!: GenderTypeEnum;
@@ -68,6 +68,7 @@ export class Rule extends BaseEntity {
 	@Expose()
 	@Column({
 		type: 'enum',
+		enum: SeasonTypeEnum,
 		default: SeasonTypeEnum.Unknown
 	})
 	season!: SeasonTypeEnum;

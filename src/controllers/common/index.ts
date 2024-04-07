@@ -1,10 +1,10 @@
 import { Controller } from '../../common/types';
 import postService from './service';
 
-const RequestController: Controller = () => {
+const CommonController: Controller = () => {
 	const actions = postService();
 	return {
-		basePath: '/request',
+		basePath: '/common',
 		methods: [
 			{
 				path: '/getRecommend',
@@ -14,4 +14,4 @@ const RequestController: Controller = () => {
 		]
 	};
 };
-export default RequestController;
+export default CommonController;
