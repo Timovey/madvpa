@@ -1,5 +1,6 @@
 import { Expose, Transform } from 'class-transformer';
 import 'reflect-metadata';
+import { GenderTypeEnum, SeasonTypeEnum } from '../db/entity/Rule';
 
 export class RequestViewModel {
 	@Expose()
@@ -12,8 +13,8 @@ export class RequestViewModel {
 	weight!: number;
 
 	@Expose()
-	gender!: boolean;
+	gender!: GenderTypeEnum;
 
 	@Expose()
-	season!: boolean;
+	season!: SeasonTypeEnum;
 }

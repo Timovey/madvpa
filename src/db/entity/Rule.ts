@@ -4,15 +4,15 @@ import { Expose, Type } from 'class-transformer';
 import { BaseEntity } from './BaseEntity';
 
 export enum GenderTypeEnum {
-	Unknown,
-	Man,
-	Wooman
+	Unknown = 0,
+	Man = 1,
+	Wooman = 2
 }
 
 export enum SeasonTypeEnum {
-	Unknown,
-	Cold,
-	Warm
+	Unknown = 0,
+	Cold = 1,
+	Warm = 2
 }
 
 @Entity()

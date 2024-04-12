@@ -6,14 +6,9 @@ import {
 } from '../helpers/convertHelper';
 import 'reflect-metadata';
 import { NotFoundError, UnprocessableEntityError } from '../common/error';
-import moment from 'moment';
-import { Between, IsNull, Not } from 'typeorm';
 import { RequestViewModel } from '../dto/RequestViewModel';
-import { Rule } from '../db/entity/Rule';
-
-const bodyRate = 1;
-const genderRate = 0.8;
-const seasonRate = 0.5;
+import { GenderTypeEnum, Rule, SeasonTypeEnum } from '../db/entity/Rule';
+import { rateWeight } from './types';
 
 async function getRate(payload: RequestViewModel) {
 	try {
@@ -21,46 +16,56 @@ async function getRate(payload: RequestViewModel) {
 
 		const ruleRep = AppDataSource.getRepository(Rule);
 		const rules = await ruleRep.find();
+		console.log(payload);
+
 		const rateRules = rules.map((rule) => {
 			let rate = 0;
 
 			for (const [key, value] of Object.entries(rule)) {
-				// console.log(`${key}: ${value}`);
-				const objKeys = Object.keys(payload);
 				if (key.includes('min')) {
-					const payloadProperty: any =
-						jsonPayload[key.split('min')[1].toLowerCase() ?? ''];
+					const payloadPropertyStr = key.split('min')[1].toLowerCase() ?? '';
+					const payloadProperty: any = jsonPayload[payloadPropertyStr];
 					if (!value || (value && payloadProperty && value < payloadProperty)) {
-						rate += 1;
+						rate += 1 * rateWeight[payloadPropertyStr];
 					} else {
-						rate += 1 - Math.abs(value - payloadProperty) / payloadProperty;
+						rate +=
+							(1 - Math.abs(value - payloadProperty) / payloadProperty) *
+							rateWeight[payloadPropertyStr];
 					}
 				} else if (key.includes('max')) {
-					const payloadProperty: any =
-						jsonPayload[key.split('max')[1].toLowerCase() ?? ''];
+					const payloadPropertyStr = key.split('max')[1].toLowerCase() ?? '';
+					const payloadProperty: any = jsonPayload[payloadPropertyStr];
 					if (!value || (value && payloadProperty && value > payloadProperty)) {
-						rate += 1;
+						rate += 1 * rateWeight[payloadPropertyStr];
 					} else {
-						rate += 1 - Math.abs(value - payloadProperty) / payloadProperty;
+						rate +=
+							(1 - Math.abs(value - payloadProperty) / payloadProperty) *
+							rateWeight[payloadPropertyStr];
 					}
 				} else {
-					if (key.includes('gender')) {
-						console.log(key);
-					} else if (key.includes('season')) {
-						console.log(key);
+					if (key.includes('gender') && value != GenderTypeEnum.Unknown) {
+						rate += +(value === payload['gender']) * rateWeight['gender'];
+					} else if (
+						key.includes('gender') &&
+						value == GenderTypeEnum.Unknown
+					) {
+						rate += 1 * rateWeight['gender'];
+					}
+
+					if (key.includes('season') && value != SeasonTypeEnum.Unknown) {
+						rate += +(value === payload['season']) * rateWeight['season'];
+					} else if (
+						key.includes('season') &&
+						value == SeasonTypeEnum.Unknown
+					) {
+						rate += 1 * rateWeight['season'];
 					}
 				}
 			}
-
-			console.log(rate);
-
-			// if (!rule.maxAge || (rule.maxAge && rule.maxAge > payload.age)) {
-			// 	rate += 1;
-			// } else {
-			// 	rate += 1 - Math.abs(rule.maxAge - payload.age) / payload.age;
-			// }
-			return 0;
+			return { rate, rule };
 		});
+
+		console.log(rateRules);
 
 		// return convertToClass(UserDetailViewModel, user);
 	} catch (err: any) {

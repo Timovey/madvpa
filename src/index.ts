@@ -37,13 +37,8 @@ async function start() {
 		//создаем http(s) сервер
 		const server = http.createServer({}, app);
 
-		//создаем логгер
 		//подключаем роуты
 		app.use(initRoutes());
-
-		//подключаем статику для авторизированных пользователей
-		app.use('/static', express.static(process.cwd() + '/static'));
-		app.use('/temp', express.static(process.cwd() + '/temp'));
 
 		useErrorHandler(app);
 
