@@ -4,7 +4,6 @@ let isString = (value) => typeof value === 'string' || value instanceof String;
 
 function handle_request_error(error) {
     console.error(error);
-
     if (error && isString(error)) {
         return Swal.fire({
             ...swal_types.error,
