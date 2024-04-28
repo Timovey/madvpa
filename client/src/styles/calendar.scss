@@ -1,0 +1,101 @@
+.vc-container {
+    --vc-font-normal: 400;
+    --vc-font-medium: 400;
+    --vc-font-semibold: 400;
+    --vc-font-bold: 400;
+
+    --vc-font-family: 'Lato', sans-serif;
+
+    .vc-orange {
+        --vc-accent-50: #fff4de;
+        --vc-accent-100: #fff4de;
+        --vc-accent-200: #fff4de;
+        --vc-accent-300: #f2b030;
+        --vc-accent-400: #f2b030;
+        --vc-accent-500: #f2b030;
+        --vc-accent-600: #f2b030;
+        --vc-accent-700: #f2b030;
+        --vc-accent-800: #f2b030;
+        --vc-accent-900: #f2b030;
+    }
+    .vc-weekday-1,
+    .vc-weekday-7 {
+        color: var(--lk-orange);
+    }
+    .vc-weekday-2,
+    .vc-weekday-3,
+    .vc-weekday-4,
+    .vc-weekday-5,
+    .vc-weekday-6 {
+        color: var(--lk-primary);
+    }
+    color: var(--lk-primary);
+}
+.vc-nav-item.is-active {
+    background-color: var(--lk-orange);
+}
+.vc-nav-item.is-current {
+    color: var(--lk-orange);
+}
+.weekday-1,
+.weekday-7 {
+    .vc-day-content {
+        color: var(--lk-orange);
+    }
+}
+
+.vc-highlight-bg-light {
+    background-color: var(--lk-lite-orange);
+}
+.vc-highlight-content-solid.vc-blue {
+    background-color: var(--lk-lite-orange);
+    color: var(--lk-primary);
+}
+.vc-highlight-content-light {
+    color: var(--lk-primary);
+}
+.vc-highlight-bg-outline {
+    border-color: var(--lk-orange);
+    background-color: var(--lk-lite-orange);
+}
+.vc-focus:focus-within {
+    box-shadow: var(--lk-orange);
+}
+.vc-highlight-content-outline {
+    color: var(--lk-primary);
+}
+.vc-highlights.vc-day-layer {
+    .vc-day-layer.vc-blue {
+        .vc-highlight.vc-highlight-bg-solid {
+            background-color: var(--lk-lite-orange);
+        }
+    }
+}
+
+.vc-monthly .is-not-in-month * {
+    opacity: 1;
+    color: #d9d9d9;
+
+    &:not(.vc-disabled) {
+        pointer-events: all;
+    }
+}
+
+.is-not-in-month {
+    &.weekday-1,
+    &.weekday-7 {
+        .vc-day-content {
+            color: #f5dcaa;
+        }
+    }
+}
+
+.vc-day-content {
+    &:hover {
+        background-color: transparent;
+    }
+}
+
+.vc-disabled {
+    pointer-events: none;
+}
