@@ -13,8 +13,8 @@ import { ref } from 'vue';
 import { Swal, swal_types } from '@/shared';
 import { number, string, object } from 'yup';
 import AppInput from '@/components/AppInput.vue';
-import { handle_request_error } from '../helpers';
-import { apiService } from '@/services/api_service';
+
+const $emit = defineEmits(['onCreate']);
 const payload = ref({
     weight: 50,
     height: 100,
@@ -39,8 +39,6 @@ const rules = {
         .min(18, 'Минимальный возраст 18')
         .max(80, 'Максимальный возраст 80')
 };
-const isLoading = ref(false);
-const recommend = ref(null);
 const yupSchema = object({
     ...rules
 });
@@ -53,7 +51,6 @@ async function onSubmit(e) {
                 title: 'Поля не заполнены'
             });
         }
-        console.log(age, height, weight);
         if (
             !Number.isInteger(+age) ||
             !Number.isInteger(+height) ||
@@ -65,13 +62,9 @@ async function onSubmit(e) {
             });
         }
         await yupSchema.validate(payload.value);
-        isLoading.value = true;
-        const res = await apiService.post('/common/getRecommend', payload.value);
-        recommend.value = res.data;
+        $emit('onCreate', payload.value);
     } catch (e) {
         handle_request_error(e.message);
-    } finally {
-        isLoading.value = false;
     }
 }
 </script>
@@ -87,6 +80,9 @@ async function onSubmit(e) {
         background-color: #f2b030;
         color: #fff;
         font-size: 16px;
+    }
+    h3 {
+        margin-bottom: 5px;
     }
 }
 </style>
