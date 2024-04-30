@@ -2,23 +2,31 @@
     <div class="result">
         <h2 class="title">Ваша норма в неделю:</h2>
         <div class="row">
-            <div class="title">Активность в мин.:</div>
+            <div class="title nocurp">Активность в мин.:</div>
             <div class="value">{{ recommend.norm }}</div>
         </div>
         <div class="row" v-if="recommend.stretchCount">
-            <div class="title">Кол-во упражнений по растяжке:</div>
+            <button @click="select = types.stretchCount" class="title">
+                Кол-во упражнений по растяжке:
+            </button>
             <div class="value">{{ recommend.stretchCount }}</div>
         </div>
         <div class="row" v-if="recommend.powerCount">
-            <div class="title">Кол-во силовых упражнений:</div>
+            <button @click="select = types.powerCount" class="title">
+                Кол-во силовых упражнений:
+            </button>
             <div class="value">{{ recommend.powerCount }}</div>
         </div>
         <div class="row" v-if="recommend.cardioCount">
-            <div class="title">Кол-во кардио упражнений:</div>
+            <button @click="select = types.cardioCount" class="title">
+                Кол-во кардио упражнений:
+            </button>
             <div class="value">{{ recommend.cardioCount }}</div>
         </div>
         <div class="row" v-if="recommend.comboCount">
-            <div class="title">Кол-во комбинированных упражнений:</div>
+            <button @click="select = types.comboCount" class="title">
+                Кол-во комбинированных упражнений:
+            </button>
             <div class="value">{{ recommend.comboCount }}</div>
         </div>
         <div class="bottom">
@@ -31,21 +39,58 @@
                 </li>
                 <li>
                     При ухудшении самочувствия во время тренировки необходимо постепенно
-                    снизить ритм и замедлиться, крайне не рекомендуется резко закончивать
+                    снизить ритм и замедлиться, крайне не рекомендуется резко заканчивать
                     упражнение, только в эксренных случаях
                 </li>
             </ul>
         </div>
     </div>
+    <AppModal v-if="select" @close-modal="select = null">
+        <div class="wrapper">
+            <div class="pulse">
+                - При данной физической активности норма пульса составляет
+                {{ select.norm ?? '' }}
+            </div>
+            <div class="recom">
+                - При превышении нормы пульса рекомендуется снизить темп или кол-во
+                подходов к упражнению
+            </div>
+            <div class="recom">
+                - В данном виде физической активности допускаются такие упражнения, как:
+                {{ (select.exercises ?? []).join(', ') }}
+            </div>
+        </div>
+    </AppModal>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import AppModal from '@/components/AppModal.vue';
 const props = defineProps({
     recommend: {
         type: Object,
         required: true
     }
 });
+const select = ref(null);
+const types = {
+    stretchCount: {
+        norm: '100-120',
+        exercises: []
+    },
+    powerCount: {
+        norm: '120-140',
+        exercises: ['жим лежа']
+    },
+    cardioCount: {
+        norm: '140-160',
+        exercises: ['бег трусцой', 'прыжки на скакалке']
+    },
+    comboCount: {
+        norm: '160-180',
+        exercises: []
+    }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -56,22 +101,35 @@ const props = defineProps({
     font-size: 16px;
     max-width: 50%;
     h2.title {
-        color: #d6d6d6;
+        color: var(--lk-orange);
+        text-decoration: underline;
         font-weight: 700;
     }
+
     .row {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         gap: 10px;
+        .title {
+            cursor: pointer;
+        }
+        .title:hover {
+            color: var(--lk-orange);
+        }
+        .title.nocurp {
+            cursor: auto;
+            color: var(--lk-primary);
+        }
         .value {
             font-weight: 700;
-            color: #f2b030;
+            color: var(--lk-orange);
         }
     }
     .bottom {
         .title {
-            color: #d6d6d6;
+            color: var(--lk-orange);
+            text-decoration: underline;
             font-weight: 700;
         }
         .body {
@@ -84,5 +142,10 @@ const props = defineProps({
             }
         }
     }
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 </style>

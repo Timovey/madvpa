@@ -33,6 +33,7 @@ async function onCreate(value) {
 
 <style lang="scss" scoped>
 .wrapper {
+    background: center / contain no-repeat url('images/png/image.png');
     background-color: #fafafa;
     color: #292929;
     font-size: 14px;
