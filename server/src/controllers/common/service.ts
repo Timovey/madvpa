@@ -10,7 +10,7 @@ import { BadRequestError, NotFoundError, UnauthorizeError } from '../../common/e
 import moment from 'moment';
 import { RequestViewModel } from '../../dto';
 import { getAge, getBMI } from '../../businessLogic/rate';
-import { getRule } from '../../businessLogic/predict';
+import { getRule, getRule2 } from '../../businessLogic/predict';
 import { RuleViewModel } from '../../dto/RuleViewModel';
 
 const commonService: Service = () => {
@@ -24,7 +24,8 @@ const commonService: Service = () => {
 				const bmiLabel = getBMI(weight, height);
 				const ageLabel = getAge(age);
 
-				const rule = await getRule(ageLabel, bmiLabel);
+				// const rule = await getRule(ageLabel, bmiLabel);
+				const rule = await getRule2(ageLabel, bmiLabel);
 				response.json(convertToJson(RuleViewModel, rule));
 			} catch (err) {
 				next(err);

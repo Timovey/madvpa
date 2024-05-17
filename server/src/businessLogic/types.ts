@@ -3,10 +3,7 @@ type StrNumType = {
 };
 const rateWeight: StrNumType = {
 	age: 1,
-	height: 0.8,
-	weight: 0.9,
-	gender: 0.6,
-	season: 0.5
+	bmi: 0.8
 };
 
 // const cardioNorm = {
@@ -18,4 +15,4 @@ const rateWeight: StrNumType = {
 
 // 	comboCount: [160, 180]
 // };
-export {};
+export { rateWeight };
