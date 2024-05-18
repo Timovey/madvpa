@@ -1,0 +1,71 @@
+.circle-timer__wrap {
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding-bottom: 24px;
+    border-radius: 3px;
+    padding-inline: 16px;
+    .circle-timer__date_picker {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 24px;
+        margin-bottom: 8px;
+        height: 24px;
+        .circle-timer__date {
+            font-size: 20px;
+            font-weight: 700;
+        }
+    }
+    .circle-timer__week {
+        color: var(--lk-grey);
+    }
+    .circle-timer__pie_wrap {
+        margin: 24px;
+    }
+    .circle-timer__time {
+        font-weight: 700;
+        font-size: 48px;
+        margin-inline: 24px;
+        margin-bottom: 32px;
+        line-height: 57.6px;
+    }
+    .circle-timer__start_work {
+        color: var(--lk-orange);
+        min-height: 45px;
+        text-align: center;
+    }
+    .circle-timer__worked_out {
+        color: var(--lk-grey);
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        margin-top: 8px;
+        grid-gap: 5px; 
+        .circle-timer__worked_out_time {
+            font-weight: 700;
+            span {
+                font-weight: 400;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 1440px) { 
+    .circle-timer__wrap {
+        width: 365px;
+        padding-bottom: 20px;
+        .circle-timer__time {
+            margin-top: 8px;
+        }
+        .circle-timer__date_picker {
+            margin-top: 40px;;
+        }
+    }
+}
