@@ -1,5 +1,9 @@
 <template>
     <div class="result">
+        <h3 class="descr">
+            Данная система предназначения для фитнес пользователей, рекомендации будут
+            полезны для начинающих или более оптыных людей, занимающихся фитнесом
+        </h3>
         <h2 class="title">Ваша норма в неделю:</h2>
         <div class="row">
             <div class="title nocurp">Активность в мин.:</div>
@@ -114,7 +118,9 @@ const types = {
         text-decoration: underline;
         font-weight: 700;
     }
-
+    .descr {
+        font-weight: 700;
+    }
     .row {
         display: flex;
         flex-direction: row;
